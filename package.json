@@ -1,0 +1,12 @@
+{
+  "name": "learn-websocket",
+  "version": "1.0.0",
+  "description": "Simple websocket app with nodejs",
+  "main": "index.js",
+  "author": "Rahman Fadhil",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}

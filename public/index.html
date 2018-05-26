@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat App</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+  <i id="typing"></i>
+  <ul id="output"></ul>
+  <input type="text" id="person" placeholder="Name">
+  <input type="text" id="input" placeholder="Message">
+  <button id="send">SEND</button>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+  <script>
+    const socket = io.connect('http://localhost:8000')
+    const output = document.getElementById('output')
+    const input = document.getElementById('input')
+    const person = document.getElementById('person')
+    const typing = document.getElementById('typing')
+    const send = document.getElementById('send')
+
+    send.addEventListener('click', () => {
+      socket.emit('chat', { message: input.value, person: person.value })
+    })
+
+    input.addEventListener('keypress', () => {
+      socket.emit('type', { person: person.value })      
+    })
+
+    socket.on('chat', (data) => {
+      console.log(data);
+      typing.innerHTML = ''
+      output.innerHTML += `<li>(${data.person}) ${data.message}</li>`
+    })
+
+    socket.on('type', (data) => {
+      console.log(data);
+      typing.innerHTML = `${data.person}`
+    })
+  </script>
+</body>
+</html>
